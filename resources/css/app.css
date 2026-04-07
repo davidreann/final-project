@@ -1,11 +1,37 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@layer base {
+  :root {
+    --brand-primary: 249 115 22;    /* orange-500 */
+    --brand-secondary: 254 243 199; /* amber-100 */
+    --surface-bg: 252 252 252;     /* off-white */
+    --text-main: 15 23 42;         /* slate-900 */
+  }
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+  body {
+    @apply bg-[rgb(var(--surface-bg))] text-[rgb(var(--text-main))] antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer components {
+  /* Reusable UI Components */
+  .btn-primary {
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full 
+           transition-all duration-200 shadow-sm hover:shadow-md active:scale-95;
+  }
+
+  .recipe-card-wrapper {
+    @apply bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-xl 
+           hover:border-orange-200 transition-all duration-300 overflow-hidden;
+  }
+
+  .table-header-cell {
+    @apply px-6 py-4 text-left text-[11px] uppercase tracking-widest font-bold text-slate-400 border-b border-slate-50;
+  }
+  
+  .rating-star-active { @apply text-orange-400; }
+  .rating-star-empty { @apply text-slate-200; }
 }

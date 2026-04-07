@@ -1,1 +1,10 @@
-<footer class="bg-gray-50 border-t border-gray-200 py-12"><div class="max-w-7xl mx-auto px-4 text-center"><div class="mb-4"><span class="text-xl font-black text-gray-300 italic">WHISKLIST</span></div><p class="text-gray-400 text-sm">CIT18 Final Project - Recipe Management System</p><div class="mt-6 flex justify-center space-x-6 text-gray-400 text-xs"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Contact Chef</a></div><p class="mt-8 text-gray-300 text-[10px] uppercase tracking-widest">© 2026 Developed for Academic Purposes</p></div></footer>
+<footer class="bg-white border-t border-slate-100 py-12 mt-20">
+    <div class="container mx-auto px-6 text-center">
+        <p class="text-slate-400 text-sm font-medium">Built with flavor for CIT18</p>
+        <div class="mt-4 flex justify-center gap-4 text-xs font-bold uppercase tracking-widest text-slate-300">
+            <a href="#" class="hover:text-orange-400">Instagram</a>
+            <a href="#" class="hover:text-orange-400">Twitter</a>
+            <a href="#" class="hover:text-orange-400">Github</a>
+        </div>
+    </div>
+</footer>
