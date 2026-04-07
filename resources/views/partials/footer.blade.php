@@ -1,0 +1,1 @@
+<header class="bg-slate-900 text-white p-6 shadow-md"><div class="container mx-auto flex justify-between items-center"><h1 class="text-2xl font-bold tracking-tighter text-orange-400">WHISKLIST</h1><nav class="space-x-4"><a href="#" class="hover:text-orange-300">Browse</a><a href="#" class="hover:text-orange-300">Post Recipe</a></nav></div></header>
