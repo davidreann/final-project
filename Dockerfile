@@ -12,8 +12,6 @@ WORKDIR /var/www
 
 COPY . .
 
-RUN cp .env.example .env || true
-
 RUN mkdir -p database && touch database/database.sqlite
 
 ENV COMPOSER_MEMORY_LIMIT=-1
