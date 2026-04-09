@@ -12,9 +12,18 @@ WORKDIR /var/www
 
 COPY . .
 
+RUN cp .env.example .env || true
+
+RUN mkdir -p database && touch database/database.sqlite
+
 RUN composer install --no-dev --optimize-autoloader
 
 RUN chmod -R 777 storage bootstrap/cache
+
+RUN php artisan config:clear
+RUN php artisan cache:clear
+
+RUN php artisan migrate --force || true
 
 EXPOSE 8000
 
