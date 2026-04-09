@@ -2,7 +2,7 @@ FROM php:8.4-fpm
 
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libpng-dev libonig-dev libxml2-dev \
-    sqlite3 libsqlite3-dev libzip-dev
+    sqlite3 libsqlite3-dev libzip-dev nodejs npm
 
 RUN docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd zip
 
@@ -17,6 +17,10 @@ RUN mkdir -p database && touch database/database.sqlite
 ENV COMPOSER_MEMORY_LIMIT=-1
 
 RUN composer install --no-dev --no-interaction --optimize-autoloader
+
+RUN npm install
+
+RUN npm run build
 
 RUN chmod -R 777 storage bootstrap/cache
 
