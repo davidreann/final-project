@@ -7,13 +7,27 @@ use Illuminate\Http\Request;
 
 class RecipeController extends Controller
 {
-    /**
-     * Fetch all recipes from the database and pass them to the Blade view.
-     * This fulfills the requirement: "Pass data from your model to your Blade views"
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $recipes = Recipe::all();
-        return view('recipes.index', compact('recipes'));
+        $search = $request->input('search');
+
+        $recipes = Recipe::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('title', 'like', "%{$search}%")
+                             ->orWhere('description', 'like', "%{$search}%");
+            })
+            // Logic: High rating first, then most feedback count
+            ->orderByDesc('rating')
+            ->orderByDesc('feedback_count') 
+            ->take(20)
+            ->get();
+
+        return view('recipes.browse', compact('recipes'));
+    }
+
+    public function show($id)
+    {
+        $recipe = Recipe::findOrFail($id);
+        return view('recipes.show', compact('recipe'));
     }
 }

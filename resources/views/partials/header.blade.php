@@ -8,7 +8,7 @@
         </a>
 
         <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
-            <a href="/" class="text-slate-500 hover:text-orange-500 transition-colors">Browse</a>
+            <a href="{{ route('recipes.browse') }}" class="text-slate-500 hover:text-orange-500 transition-colors">Browse</a>
             
             @auth
                 <a href="{{ url('/dashboard') }}" class="text-slate-500 hover:text-orange-500 transition-colors">My Dashboard</a>
