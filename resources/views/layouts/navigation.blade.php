@@ -50,7 +50,7 @@
                     </form>
                 </x-slot>
             </x-dropdown>
-            <button class="btn-primary">Post Recipe</button>
+            <a href="{{ route('recipes.create') }}" class="btn-primary">Post Recipe</a>
             @else
             <div class="hidden space-x-3 md:flex">
                 <a href="{{ route('login') }}" class="text-slate-500 hover:text-orange-500 transition-colors text-sm font-semibold">
@@ -83,6 +83,15 @@
             <a href="{{ route('recipes.browse') }}" class="block px-4 py-2 text-slate-500 hover:text-orange-600 hover:bg-slate-50 rounded-lg transition-colors font-semibold text-base">
                 {{ __('Browse Recipes') }}
             </a>
+            @auth
+                <a href="{{ route('recipes.create') }}" class="block px-4 py-2 text-orange-600 hover:text-orange-700 hover:bg-orange-50 rounded-lg transition-colors font-semibold text-base">
+                    {{ __('Post Recipe') }}
+                </a>
+            @else
+                <a href="{{ route('login') }}" class="block px-4 py-2 text-orange-600 hover:text-orange-700 hover:bg-orange-50 rounded-lg transition-colors font-semibold text-base">
+                    {{ __('Post Recipe') }}
+                </a>
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->

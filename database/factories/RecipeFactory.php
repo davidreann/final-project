@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,11 +16,17 @@ class RecipeFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => User::factory(),
             'title' => fake()->words(3, true),
-            'description' => fake()->paragraph(5),
+            'description' => fake()->paragraph(2),
+            'ingredients' => collect(fake()->sentences(6))
+                ->map(fn ($line) => '- ' . $line)
+                ->implode("\n"),
+            'steps' => collect(fake()->sentences(5))
+                ->map(fn ($line, $index) => ($index + 1) . '. ' . $line)
+                ->implode("\n"),
             'prep_time' => fake()->numberBetween(15, 120),
-            'rating' => fake()->numberBetween(1, 5),
-            'author' => fake()->name(),
+            'image' => null,
         ];
     }
 }

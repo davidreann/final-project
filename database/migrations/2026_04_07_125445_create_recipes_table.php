@@ -8,22 +8,25 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * * Fields added for Whisklist features:
-     * - title: For recipe names and search keywords
-     * - description: Detailed instructions/ingredients
-     * - prep_time: For filtering by duration
-     * - rating: For the 5-star rating feature
-     * - author: For user account profile identification
+     * Fields for Whisklist recipe posting.
      */
     public function up(): void
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->text('ingredients');
+            $table->text('steps');
+            $table->text('closing')->nullable();
+
+            $table->string('image')->nullable();
+
             $table->integer('prep_time')->default(0);
-            $table->integer('rating')->default(0);
-            $table->string('author')->nullable();
+            $table->boolean('is_draft')->default(false);
+
             $table->timestamps();
         });
     }

@@ -21,7 +21,11 @@
                 <a href="{{ route('register') }}" class="px-5 py-2 bg-orange-50 text-orange-600 rounded-full hover:bg-orange-100 transition-colors">Join Now</a>
             @endauth
 
-            <button class="btn-primary ml-2">Post Recipe</button>
+            @auth
+                <a href="{{ route('recipes.create') }}" class="btn-primary ml-2">Post Recipe</a>
+            @else
+                <a href="{{ route('login') }}" class="btn-primary ml-2">Post Recipe</a>
+            @endauth
         </nav>
     </div>
 </header>
