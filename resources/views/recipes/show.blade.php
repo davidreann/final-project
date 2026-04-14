@@ -1,10 +1,6 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto px-6 py-12">
-        @if (session('status'))
-            <div class="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700 font-semibold">
-                {{ session('status') }}
-            </div>
-        @endif
+        @include('partials.status-message')
 
         <div class="bg-white border border-slate-100 shadow-sm rounded-3xl p-6 md:p-10">
             <div class="flex flex-wrap items-center gap-3 mb-4">

@@ -1,1 +1,55 @@
-@import "tailwindcss"; @theme { --color-brand-primary: #f97316; --color-brand-secondary: #fff7ed; } @layer base { body { @apply bg-white text-slate-900 antialiased; font-family: 'Inter', sans-serif; } } @layer components { .btn-primary { @apply bg-orange-500 hover:bg-orange-600 text-white font-black py-3.5 px-8 rounded-2xl transition-all duration-300 shadow-lg shadow-orange-200 active:scale-95 flex items-center justify-center; } .auth-label { @apply block font-black text-[11px] uppercase tracking-[0.15em] text-slate-500 mb-2 ml-1; } .auth-input { @apply w-full px-5 py-4 bg-slate-50/50 border-2 border-slate-100 rounded-2xl outline-none focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all duration-300 placeholder:text-slate-300 font-bold text-slate-700 shadow-sm; } .recipe-card-wrapper { @apply bg-white border border-slate-100 rounded-[2rem] shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 cursor-pointer; } }
+@import "tailwindcss";
+
+@theme {
+	--color-brand-primary: #f97316;
+	--color-brand-secondary: #fff7ed;
+}
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		@apply bg-gradient-to-br from-slate-50 via-white to-orange-50/20 text-slate-900 antialiased;
+		font-family: 'Inter', sans-serif;
+		background-attachment: fixed;
+	}
+}
+
+@layer components {
+	.btn-primary {
+		@apply bg-orange-500 hover:bg-orange-600 text-white font-black py-3.5 px-8 rounded-2xl transition-all duration-300 shadow-lg shadow-orange-200 active:scale-95 flex items-center justify-center;
+	}
+
+	.auth-label {
+		@apply block font-black text-[11px] uppercase tracking-[0.15em] text-slate-500 mb-2 ml-1;
+	}
+
+	.auth-input {
+		@apply w-full px-5 py-4 bg-slate-50/50 border-2 border-slate-100 rounded-2xl outline-none focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all duration-300 placeholder:text-slate-300 font-bold text-slate-700 shadow-sm;
+	}
+
+	.recipe-card-wrapper {
+		@apply bg-white border border-slate-200 rounded-[2rem] shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer;
+	}
+
+	.scrollbar-hide {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none;
+	}
+
+	.category-container {
+		@apply bg-gradient-to-br from-white to-orange-50/30 rounded-3xl p-8 border border-orange-100/50 backdrop-blur-sm;
+	}
+}
+
+@layer utilities {
+	.scroll-smooth {
+		scroll-behavior: smooth;
+	}
+}

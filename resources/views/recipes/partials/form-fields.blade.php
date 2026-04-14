@@ -11,6 +11,27 @@
     >
 </div>
 
+<div>
+    <label for="image" class="block text-sm font-bold text-slate-700 mb-2">Recipe Image (optional)</label>
+    <input
+        type="file"
+        id="image"
+        name="image"
+        accept="image/*"
+        class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-orange-500 focus:ring-0 transition file:mr-4 file:rounded-xl file:border-0 file:bg-orange-50 file:px-4 file:py-2 file:text-sm file:font-bold file:text-orange-700 hover:file:bg-orange-100"
+    >
+    <p class="mt-2 text-xs text-slate-500 font-semibold">PNG, JPG, GIF, or WEBP up to 5MB.</p>
+
+    @if (! empty($recipe?->image))
+        <p class="mt-3 text-xs text-slate-500 font-semibold">Current image:</p>
+        <img
+            src="{{ \Illuminate\Support\Facades\Storage::url($recipe->image) }}"
+            alt="Current recipe image"
+            class="mt-2 h-24 w-24 rounded-2xl object-cover border border-slate-200"
+        >
+    @endif
+</div>
+
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div>
         <label for="prep_time" class="block text-sm font-bold text-slate-700 mb-2">Prep Time (minutes)</label>
@@ -23,6 +44,21 @@
             max="1440"
             class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-orange-500 focus:ring-0 transition"
         >
+    </div>
+
+    <div>
+        <label for="category" class="block text-sm font-bold text-slate-700 mb-2">Recipe Category (optional)</label>
+        <select
+            id="category"
+            name="category"
+            class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-orange-500 focus:ring-0 transition"
+        >
+            <option value="">-- Select a category --</option>
+            <option value="main_dish" @selected(old('category', $recipe->category ?? '') === 'main_dish')>Main Dish</option>
+            <option value="appetizer" @selected(old('category', $recipe->category ?? '') === 'appetizer')>Appetizer</option>
+            <option value="side_dish" @selected(old('category', $recipe->category ?? '') === 'side_dish')>Side Dish</option>
+            <option value="dessert" @selected(old('category', $recipe->category ?? '') === 'dessert')>Dessert</option>
+        </select>
     </div>
 </div>
 

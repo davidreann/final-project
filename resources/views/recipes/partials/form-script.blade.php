@@ -3,6 +3,9 @@
         const stepsWrapper = document.getElementById('steps-wrapper');
         const addStepButton = document.getElementById('add-step');
         const form = document.getElementById('{{ $formId }}');
+        const imageInput = form?.querySelector('input[name="image"]');
+        const maxImageBytes = 5 * 1024 * 1024;
+        const imageTooLargeMessage = 'Cannot upload past 5MB. Please choose an image smaller than 5MB.';
         let submitting = false;
 
         if (!form) {
@@ -17,6 +20,34 @@
         };
 
         let initialSnapshot = getFormSnapshot();
+
+        const validateImageSize = () => {
+            if (!imageInput) {
+                return true;
+            }
+
+            const file = imageInput.files?.[0];
+
+            if (!file) {
+                imageInput.setCustomValidity('');
+                return true;
+            }
+
+            if (file.size > maxImageBytes) {
+                imageInput.setCustomValidity(imageTooLargeMessage);
+                imageInput.reportValidity();
+
+                return false;
+            }
+
+            imageInput.setCustomValidity('');
+
+            return true;
+        };
+
+        if (imageInput) {
+            imageInput.addEventListener('change', validateImageSize);
+        }
 
         const hasUnsavedChanges = () => !submitting && getFormSnapshot() !== initialSnapshot;
 
@@ -43,7 +74,14 @@
             }
         });
 
-        form.addEventListener('submit', function () {
+        form.addEventListener('submit', function (event) {
+            if (!validateImageSize()) {
+                submitting = false;
+                event.preventDefault();
+
+                return;
+            }
+
             submitting = true;
         });
 

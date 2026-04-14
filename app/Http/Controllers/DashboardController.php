@@ -8,11 +8,18 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $recipes = $request->user()
+        $publishedRecipes = $request->user()
             ->recipes()
+            ->where('is_draft', false)
             ->latest()
             ->get();
 
-        return view('dashboard', compact('recipes'));
+        $draftRecipes = $request->user()
+            ->recipes()
+            ->where('is_draft', true)
+            ->latest()
+            ->get();
+
+        return view('dashboard', compact('publishedRecipes', 'draftRecipes'));
     }
 }

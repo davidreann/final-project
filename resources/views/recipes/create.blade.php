@@ -34,7 +34,7 @@
                 </div>
             @endif
 
-            <form id="recipe-form" action="{{ route('recipes.store') }}" method="POST" class="space-y-6">
+            <form id="recipe-form" action="{{ route('recipes.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
 
                 @include('recipes.partials.form-actions', [

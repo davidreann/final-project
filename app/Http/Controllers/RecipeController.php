@@ -7,19 +7,69 @@ use App\Http\Requests\UpdateRecipeRequest;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class RecipeController extends Controller
 {
     public function index(Request $request)
     {
-        $recipes = Recipe::query()
+        $search = $request->input('search');
+
+        $topRecipes = Recipe::query()
             ->published()
-            ->search($request->input('search'))
+            ->search($search)
             ->orderByDesc('created_at')
             ->take(20)
             ->get();
 
-        return view('recipes.browse', compact('recipes'));
+        $newRecipes = Recipe::query()
+            ->published()
+            ->search($search)
+                ->recent()
+            ->take(20)
+            ->get();
+
+        $mainDishRecipes = Recipe::query()
+            ->published()
+            ->search($search)
+            ->byCategory('main_dish')
+                ->recent()
+            ->take(20)
+            ->get();
+
+        $appetizerRecipes = Recipe::query()
+            ->published()
+            ->search($search)
+            ->byCategory('appetizer')
+                ->recent()
+            ->take(20)
+            ->get();
+
+        $sideDishRecipes = Recipe::query()
+            ->published()
+            ->search($search)
+            ->byCategory('side_dish')
+                ->recent()
+            ->take(20)
+            ->get();
+
+        $dessertRecipes = Recipe::query()
+            ->published()
+            ->search($search)
+            ->byCategory('dessert')
+                ->recent()
+            ->take(20)
+            ->get();
+
+        return view('recipes.browse', compact(
+            'topRecipes',
+            'newRecipes',
+            'mainDishRecipes',
+            'appetizerRecipes',
+            'sideDishRecipes',
+            'dessertRecipes',
+            'search'
+        ));
     }
 
     public function create()
@@ -33,6 +83,9 @@ class RecipeController extends Controller
         $validated = $request->validated();
 
         $steps = $this->normalizeSteps($validated['steps'] ?? []);
+        $imagePath = $request->hasFile('image')
+            ? $request->file('image')->store('recipes', 'public')
+            : null;
 
         if (! $isDraft && $steps->isEmpty()) {
             return back()
@@ -48,6 +101,8 @@ class RecipeController extends Controller
             'closing' => $validated['closing'] ?? null,
             'prep_time' => $validated['prep_time'] ?? 0,
             'is_draft' => $isDraft,
+            'image' => $imagePath,
+            'category' => $validated['category'] ?? null,
             'user_id' => Auth::id(),
         ]);
 
@@ -83,6 +138,16 @@ class RecipeController extends Controller
                 ->withInput();
         }
 
+        $imagePath = $recipe->image;
+
+        if ($request->hasFile('image')) {
+            if (! empty($recipe->image)) {
+                Storage::disk('public')->delete($recipe->image);
+            }
+
+            $imagePath = $request->file('image')->store('recipes', 'public');
+        }
+
         $recipe->update([
             'title' => $validated['title'] ?? '',
             'description' => $validated['description'] ?? null,
@@ -91,6 +156,8 @@ class RecipeController extends Controller
             'closing' => $validated['closing'] ?? null,
             'prep_time' => $validated['prep_time'] ?? 0,
             'is_draft' => $isDraft,
+            'image' => $imagePath,
+            'category' => $validated['category'] ?? null,
         ]);
 
         if ($isDraft) {

@@ -1,29 +1,94 @@
 <x-app-layout>
-    <div class="max-w-7xl mx-auto px-6 py-12">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-            <div>
-                <h1 class="text-4xl font-black text-slate-800 tracking-tight">Top 20 Recipes</h1>
-                <p class="text-slate-500 font-medium mt-2">The most loved recipes in the Whisklist community.</p>
-            </div>
+    <!-- Include Scroll Header -->
+    @include('recipes.partials.scroll-header', ['search' => $search ?? ''])
 
-            <form action="{{ route('recipes.browse') }}" method="GET" class="relative group">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search recipes..." 
-                       class="w-full md:w-80 px-6 py-3 bg-slate-100 border-2 border-transparent rounded-2xl focus:bg-white focus:border-orange-500 focus:ring-0 transition-all duration-300 font-bold">
-                <button type="submit" class="absolute right-4 top-3.5 text-slate-400 group-hover:text-orange-500">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </button>
-            </form>
-        </div>
+    @include('partials.page-heading', [
+        'title' => 'Browse Recipes',
+        'subtitle' => 'Discover delicious recipes from our community.',
+    ])
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            @foreach($recipes as $recipe)
-                @include('recipes.partials.card', ['recipe' => $recipe])
-            @endforeach
-        </div>
+    <!-- Category Sections -->
+    <div class="max-w-7xl mx-auto px-6 pb-10 space-y-10">
+        
+        <!-- Top 20 Recipes -->
+        @if($topRecipes->isNotEmpty())
+            @include('recipes.partials.category-row', [
+                'title' => 'Top 20 Recipes',
+                'subtitle' => 'The most loved recipes in the Whisklist community.',
+                'recipes' => $topRecipes,
+                'visibleCount' => 4,
+                'categoryId' => 'top-recipes',
+                'seeMoreUrl' => '#top-recipes',
+            ])
+        @endif
 
-        @if($recipes->isEmpty())
-            <div class="text-center py-24 bg-orange-50/50 rounded-[3rem] border-2 border-dashed border-orange-100">
-                <p class="text-orange-600 font-black text-xl italic">No recipes found matching your search!</p>
+        <!-- New Recipes -->
+        @if($newRecipes->isNotEmpty())
+            @include('recipes.partials.category-row', [
+                'title' => 'New',
+                'subtitle' => 'Fresh recipes just added to our collection.',
+                'recipes' => $newRecipes,
+                'categoryId' => 'new-recipes',
+                'visibleCount' => 4,
+                'seeMoreUrl' => '#new-recipes',
+            ])
+        @endif
+
+        <!-- Main Dish -->
+        @if($mainDishRecipes->isNotEmpty())
+            @include('recipes.partials.category-row', [
+                'title' => 'Main Dish',
+                'subtitle' => 'Hearty and satisfying main course recipes.',
+                'recipes' => $mainDishRecipes,
+                'categoryId' => 'main-dish',
+                'visibleCount' => 4,
+                'seeMoreUrl' => '#main-dish',
+            ])
+        @endif
+
+        <!-- Appetizer -->
+        @if($appetizerRecipes->isNotEmpty())
+            @include('recipes.partials.category-row', [
+                'title' => 'Appetizer',
+                'subtitle' => 'Start your meal with these delightful starters.',
+                'recipes' => $appetizerRecipes,
+                'categoryId' => 'appetizer',
+                'visibleCount' => 4,
+                'seeMoreUrl' => '#appetizer',
+            ])
+        @endif
+
+        <!-- Side Dish -->
+        @if($sideDishRecipes->isNotEmpty())
+            @include('recipes.partials.category-row', [
+                'title' => 'Side Dish',
+                'subtitle' => 'Perfect sides to complement your main course.',
+                'recipes' => $sideDishRecipes,
+                'categoryId' => 'side-dish',
+                'visibleCount' => 4,
+                'seeMoreUrl' => '#side-dish',
+            ])
+        @endif
+
+        <!-- Dessert -->
+        @if($dessertRecipes->isNotEmpty())
+            @include('recipes.partials.category-row', [
+                'title' => 'Dessert',
+                'subtitle' => 'Sweet treats to satisfy your cravings.',
+                'recipes' => $dessertRecipes,
+                'categoryId' => 'dessert',
+                'visibleCount' => 4,
+                'seeMoreUrl' => '#dessert',
+            ])
+        @endif
+
+        <!-- No Results Message -->
+        @if($topRecipes->isEmpty() && $newRecipes->isEmpty() && $mainDishRecipes->isEmpty() && 
+            $appetizerRecipes->isEmpty() && $sideDishRecipes->isEmpty() && $dessertRecipes->isEmpty())
+            <div class="text-center py-20 bg-gradient-to-br from-white to-orange-50/30 rounded-3xl border-2 border-dashed border-orange-200 shadow-sm">
+                <svg class="w-16 h-16 mx-auto text-orange-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <p class="text-orange-700 font-black text-lg">No recipes found matching your search!</p>
+                <p class="text-orange-600 text-sm mt-2">Try searching with different keywords or browse our categories.</p>
             </div>
         @endif
     </div>

@@ -22,6 +22,8 @@ class UpdateRecipeRequest extends FormRequest
                 'steps.*' => ['nullable', 'string', 'max:1000'],
                 'closing' => ['nullable', 'string', 'max:3000'],
                 'prep_time' => ['nullable', 'integer', 'min:0', 'max:1440'],
+                'image' => ['nullable', 'image', 'max:5120'],
+                'category' => ['nullable', 'in:main_dish,appetizer,side_dish,dessert'],
             ];
         }
 
@@ -33,6 +35,8 @@ class UpdateRecipeRequest extends FormRequest
             'steps.*' => ['required', 'string', 'max:1000'],
             'closing' => ['nullable', 'string', 'max:3000'],
             'prep_time' => ['nullable', 'integer', 'min:0', 'max:1440'],
+            'image' => ['nullable', 'image', 'max:5120'],
+            'category' => ['nullable', 'in:main_dish,appetizer,side_dish,dessert'],
         ];
     }
 }

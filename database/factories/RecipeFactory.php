@@ -27,6 +27,7 @@ class RecipeFactory extends Factory
                 ->implode("\n"),
             'prep_time' => fake()->numberBetween(15, 120),
             'image' => null,
+            'category' => fake()->randomElement(['main_dish', 'appetizer', 'side_dish', 'dessert']),
         ];
     }
 }

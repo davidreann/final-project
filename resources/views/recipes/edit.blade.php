@@ -38,7 +38,7 @@
                 </div>
             @endif
 
-            <form id="recipe-edit-form" action="{{ route('recipes.update', $recipe->id) }}" method="POST" class="space-y-6">
+            <form id="recipe-edit-form" action="{{ route('recipes.update', $recipe->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 @method('PATCH')
 

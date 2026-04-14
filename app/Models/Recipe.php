@@ -20,6 +20,7 @@ class Recipe extends Model
         'prep_time',
         'is_draft',
         'image',
+        'category',
         'user_id',
     ];
 
@@ -46,5 +47,19 @@ class Recipe extends Model
                 ->orWhere('steps', 'like', "%{$search}%")
                 ->orWhere('closing', 'like', "%{$search}%");
         });
+    }
+
+    public function scopeByCategory(Builder $query, ?string $category): Builder
+    {
+        if (blank($category)) {
+            return $query;
+        }
+
+        return $query->where('category', $category);
+    }
+
+    public function scopeRecent(Builder $query): Builder
+    {
+        return $query->orderByDesc('created_at');
     }
 }
