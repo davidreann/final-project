@@ -3,7 +3,9 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\RecipeRatingController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +31,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
     Route::post('/recipes/{recipe}/save', [RecipeController::class, 'save'])->name('recipes.save');
 });
+
+// ── Profile Setup ──────────────────────────────────────────────
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/profile',      [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile',      [ProfileController::class, 'update'])->name('profile.update');
+
+    // ── Recipe Rating ──────────────────────────────────────────
+    Route::post('/recipes/{recipe}/rate', [RecipeRatingController::class, 'store'])
+         ->name('recipe.rate');
+});
+
 
 require __DIR__.'/auth.php';
 

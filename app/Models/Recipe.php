@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Recipe extends Model
 {
@@ -77,4 +78,34 @@ class Recipe extends Model
     {
         return $query->orderByDesc('created_at');
     }
+
+    /** All star ratings for this recipe */
+public function ratings(): HasMany
+{
+    return $this->hasMany(RecipeRating::class);
 }
+
+/** Average star rating, rounded to 1 decimal. Returns null if unrated. */
+public function averageRating(): ?float
+{
+    $avg = $this->ratings()->avg('rating');
+    return $avg ? round($avg, 1) : null;
+}
+
+/** Total number of ratings */
+public function ratingCount(): int
+{
+    return $this->ratings()->count();
+}
+
+/** The authenticated user's own rating, or null */
+public function userRating(): ?int
+{
+    if (! auth()->check()) return null;
+    return $this->ratings()
+                ->where('user_id', auth()->id())
+                ->value('rating');
+}
+
+}
+

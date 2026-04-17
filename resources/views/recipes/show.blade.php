@@ -16,7 +16,7 @@
             </div>
 
             <h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 mb-6">{{ $recipe->title }}</h1>
-
+            <x-star-rating :recipe="$recipe" /> 
             @if(! empty($recipe->image))
                 <div class="mb-8 rounded-2xl overflow-hidden bg-slate-100 aspect-video">
                     @php
