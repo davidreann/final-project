@@ -13,6 +13,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('/dashboard/section/{section}', [DashboardController::class, 'section'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard.section');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -29,4 +33,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/browse', [RecipeController::class, 'index'])->name('recipes.browse');
+Route::get('/browse/section/{section}', [RecipeController::class, 'section'])->name('recipes.section');
 Route::get('/recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show');

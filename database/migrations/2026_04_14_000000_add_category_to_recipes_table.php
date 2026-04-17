@@ -8,7 +8,6 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Adds the category column to your existing recipes table
         Schema::table('recipes', function (Blueprint $table) {
             $table->enum('category', ['main_dish', 'appetizer', 'side_dish', 'dessert'])
                   ->nullable()

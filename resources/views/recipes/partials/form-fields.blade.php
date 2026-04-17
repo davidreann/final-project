@@ -24,8 +24,13 @@
 
     @if (! empty($recipe?->image))
         <p class="mt-3 text-xs text-slate-500 font-semibold">Current image:</p>
+        @php
+            $imageSrc = filter_var($recipe->image, FILTER_VALIDATE_URL)
+                ? $recipe->image
+                : \Illuminate\Support\Facades\Storage::url($recipe->image);
+        @endphp
         <img
-            src="{{ \Illuminate\Support\Facades\Storage::url($recipe->image) }}"
+            src="{{ $imageSrc }}"
             alt="Current recipe image"
             class="mt-2 h-24 w-24 rounded-2xl object-cover border border-slate-200"
         >

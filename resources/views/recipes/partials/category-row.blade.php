@@ -1,5 +1,5 @@
 <div @isset($categoryId) id="{{ $categoryId }}" @endisset class="scroll-mt-28 mb-10 bg-gradient-to-br from-white to-orange-50/30 rounded-3xl p-8 border border-orange-100/50">
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex items-center justify-between gap-2 mb-8">
         <div>
             <h2 class="text-3xl font-black text-slate-900 tracking-tight">{{ $title }}</h2>
             @if($subtitle)
@@ -7,7 +7,7 @@
             @endif
         </div>
         @if($recipes->count() > $visibleCount)
-            <a href="{{ $seeMoreUrl }}" class="text-orange-600 font-bold hover:text-orange-700 text-sm whitespace-nowrap ml-4">
+            <a href="{{ $seeMoreUrl }}" class="text-orange-600 font-bold hover:text-orange-700 text-sm whitespace-nowrap">
                 See All →
             </a>
         @endif

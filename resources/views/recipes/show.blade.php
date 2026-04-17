@@ -15,7 +15,22 @@
                 <span class="text-slate-400 text-sm font-semibold">Posted by {{ $recipe->user?->name ?? 'Chef' }}</span>
             </div>
 
-            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 mb-4">{{ $recipe->title }}</h1>
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 mb-6">{{ $recipe->title }}</h1>
+
+            @if(! empty($recipe->image))
+                <div class="mb-8 rounded-2xl overflow-hidden bg-slate-100 aspect-video">
+                    @php
+                        $imageSrc = filter_var($recipe->image, FILTER_VALIDATE_URL)
+                            ? $recipe->image
+                            : \Illuminate\Support\Facades\Storage::url($recipe->image);
+                    @endphp
+                    <img 
+                        src="{{ $imageSrc }}" 
+                        alt="{{ $recipe->title }}"
+                        class="w-full h-full object-cover"
+                    >
+                </div>
+            @endif
 
             <div class="space-y-8">
                 <section>

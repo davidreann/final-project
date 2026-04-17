@@ -78,6 +78,83 @@ class RecipeController extends Controller
         return view('recipes.create');
     }
 
+    public function section(Request $request, string $section)
+    {
+        $search = trim((string) $request->input('search', ''));
+        $search = $search !== '' ? $search : null;
+
+        $sections = [
+            'top-recipes' => [
+                'title' => 'Top 20 Recipes',
+                'subtitle' => 'The most loved recipes in the Whisklist community.',
+                'recipes' => Recipe::query()
+                    ->published()
+                    ->search($search)
+                    ->orderByDesc('created_at')
+                    ->take(20)
+                    ->get(),
+            ],
+            'new-recipes' => [
+                'title' => 'New Recipes',
+                'subtitle' => 'Fresh recipes just added to our collection.',
+                'recipes' => Recipe::query()
+                    ->published()
+                    ->search($search)
+                    ->recent()
+                    ->get(),
+            ],
+            'main-dish' => [
+                'title' => 'Main Dish',
+                'subtitle' => 'Hearty and satisfying main course recipes.',
+                'recipes' => Recipe::query()
+                    ->published()
+                    ->search($search)
+                    ->byCategory('main_dish')
+                    ->recent()
+                    ->get(),
+            ],
+            'appetizer' => [
+                'title' => 'Appetizer',
+                'subtitle' => 'Start your meal with these delightful starters.',
+                'recipes' => Recipe::query()
+                    ->published()
+                    ->search($search)
+                    ->byCategory('appetizer')
+                    ->recent()
+                    ->get(),
+            ],
+            'side-dish' => [
+                'title' => 'Side Dish',
+                'subtitle' => 'Perfect sides to complement your main course.',
+                'recipes' => Recipe::query()
+                    ->published()
+                    ->search($search)
+                    ->byCategory('side_dish')
+                    ->recent()
+                    ->get(),
+            ],
+            'dessert' => [
+                'title' => 'Dessert',
+                'subtitle' => 'Sweet treats to satisfy your cravings.',
+                'recipes' => Recipe::query()
+                    ->published()
+                    ->search($search)
+                    ->byCategory('dessert')
+                    ->recent()
+                    ->get(),
+            ],
+        ];
+
+        abort_unless(array_key_exists($section, $sections), 404);
+
+        return view('recipes.section', [
+            'title' => $sections[$section]['title'],
+            'subtitle' => $sections[$section]['subtitle'],
+            'recipes' => $sections[$section]['recipes'],
+            'search' => $search,
+        ]);
+    }
+
     public function store(StoreRecipeRequest $request)
     {
         $isDraft = $request->input('intent') === 'draft';

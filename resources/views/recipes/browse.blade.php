@@ -32,6 +32,12 @@
         </div>
     </div>
 
+    @php
+        $browseBaseQuery = array_filter([
+            'search' => $search ?? null,
+        ], fn ($value) => ! blank($value));
+    @endphp
+
     <!-- Category Sections -->
     <div class="max-w-7xl mx-auto px-6 pb-10 space-y-10">
         
@@ -43,7 +49,7 @@
                 'recipes' => $topRecipes,
                 'visibleCount' => 4,
                 'categoryId' => 'top-recipes',
-                'seeMoreUrl' => '#top-recipes',
+                'seeMoreUrl' => route('recipes.section', array_merge(['section' => 'top-recipes'], $browseBaseQuery)),
             ])
         @endif
 
@@ -55,7 +61,7 @@
                 'recipes' => $newRecipes,
                 'categoryId' => 'new-recipes',
                 'visibleCount' => 4,
-                'seeMoreUrl' => '#new-recipes',
+                'seeMoreUrl' => route('recipes.section', array_merge(['section' => 'new-recipes'], $browseBaseQuery)),
             ])
         @endif
 
@@ -67,7 +73,7 @@
                 'recipes' => $mainDishRecipes,
                 'categoryId' => 'main-dish',
                 'visibleCount' => 4,
-                'seeMoreUrl' => '#main-dish',
+                'seeMoreUrl' => route('recipes.section', array_merge(['section' => 'main-dish'], $browseBaseQuery)),
             ])
         @endif
 
@@ -79,7 +85,7 @@
                 'recipes' => $appetizerRecipes,
                 'categoryId' => 'appetizer',
                 'visibleCount' => 4,
-                'seeMoreUrl' => '#appetizer',
+                'seeMoreUrl' => route('recipes.section', array_merge(['section' => 'appetizer'], $browseBaseQuery)),
             ])
         @endif
 
@@ -91,7 +97,7 @@
                 'recipes' => $sideDishRecipes,
                 'categoryId' => 'side-dish',
                 'visibleCount' => 4,
-                'seeMoreUrl' => '#side-dish',
+                'seeMoreUrl' => route('recipes.section', array_merge(['section' => 'side-dish'], $browseBaseQuery)),
             ])
         @endif
 
@@ -103,7 +109,7 @@
                 'recipes' => $dessertRecipes,
                 'categoryId' => 'dessert',
                 'visibleCount' => 4,
-                'seeMoreUrl' => '#dessert',
+                'seeMoreUrl' => route('recipes.section', array_merge(['section' => 'dessert'], $browseBaseQuery)),
             ])
         @endif
 

@@ -1,7 +1,9 @@
 <a href="{{ route('recipes.show', $recipe->id) }}" class="recipe-card-wrapper p-4 block hover:shadow-lg hover:scale-105 transition-all duration-300 rounded-[1.5rem]">
     @php
         $imageSrc = ! empty($recipe->image)
-            ? \Illuminate\Support\Facades\Storage::url($recipe->image)
+            ? (filter_var($recipe->image, FILTER_VALIDATE_URL) 
+                ? $recipe->image 
+                : \Illuminate\Support\Facades\Storage::url($recipe->image))
             : 'https://placehold.co/600x600?text=Delicious+Food';
     @endphp
 

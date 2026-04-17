@@ -20,7 +20,7 @@
                 'recipes' => $publishedRecipes,
                 'visibleCount' => 4,
                 'categoryId' => 'my-uploaded',
-                'seeMoreUrl' => '#my-uploaded',
+                'seeMoreUrl' => route('dashboard.section', ['section' => 'my-uploaded']),
             ])
         @else
             <div class="bg-gradient-to-br from-white to-orange-50/30 rounded-3xl p-12 border border-orange-100/50 text-center">
@@ -40,7 +40,7 @@
                 'recipes' => $draftRecipes,
                 'categoryId' => 'my-drafts',
                 'visibleCount' => 4,
-                'seeMoreUrl' => '#my-drafts',
+                'seeMoreUrl' => route('dashboard.section', ['section' => 'my-drafts']),
             ])
         @endif
 
@@ -52,7 +52,7 @@
                 'recipes' => $savedRecipes,
                 'categoryId' => 'saved-recipes',
                 'visibleCount' => 4,
-                'seeMoreUrl' => '#saved-recipes',
+                'seeMoreUrl' => route('dashboard.section', ['section' => 'saved-recipes']),
             ])
         @else
             <div class="bg-gradient-to-br from-white to-orange-50/30 rounded-3xl p-12 border border-orange-100/50 text-center">
