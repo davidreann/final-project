@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/recipes/{recipe}/edit', [RecipeController::class, 'edit'])->name('recipes.edit');
     Route::patch('/recipes/{recipe}', [RecipeController::class, 'update'])->name('recipes.update');
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
+    Route::post('/recipes/{recipe}/save', [RecipeController::class, 'save'])->name('recipes.save');
 });
 
 require __DIR__.'/auth.php';

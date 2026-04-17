@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Recipe extends Model
 {
@@ -35,6 +36,12 @@ class Recipe extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function savedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'saved_recipes')
+            ->withTimestamps();
+    }
+
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('is_draft', false);
@@ -42,6 +49,8 @@ class Recipe extends Model
 
     public function scopeSearch(Builder $query, ?string $search): Builder
     {
+        $search = trim((string) $search);
+
         if (blank($search)) {
             return $query;
         }

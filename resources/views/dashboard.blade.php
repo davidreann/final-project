@@ -43,5 +43,25 @@
                 'seeMoreUrl' => '#my-drafts',
             ])
         @endif
+
+        <!-- Saved Recipes -->
+        @if($savedRecipes->isNotEmpty())
+            @include('recipes.partials.category-row', [
+                'title' => 'Saved Recipes',
+                'subtitle' => 'Recipes you bookmarked from the community.',
+                'recipes' => $savedRecipes,
+                'categoryId' => 'saved-recipes',
+                'visibleCount' => 4,
+                'seeMoreUrl' => '#saved-recipes',
+            ])
+        @else
+            <div class="bg-gradient-to-br from-white to-orange-50/30 rounded-3xl p-12 border border-orange-100/50 text-center">
+                <svg class="w-16 h-16 mx-auto text-orange-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 5h14v14H5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9h8M8 13h5"></path></svg>
+                <p class="text-slate-500 font-semibold text-lg mb-4">You haven't saved any recipes yet.</p>
+                <a href="{{ route('recipes.browse') }}" class="btn-primary inline-block">
+                    Browse and Save Recipes
+                </a>
+            </div>
+        @endif
     </div>
 </x-app-layout>

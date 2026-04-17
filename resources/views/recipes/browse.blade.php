@@ -2,10 +2,35 @@
     <!-- Include Scroll Header -->
     @include('recipes.partials.scroll-header', ['search' => $search ?? ''])
 
-    @include('partials.page-heading', [
-        'title' => 'Browse Recipes',
-        'subtitle' => 'Discover delicious recipes from our community.',
-    ])
+    <div class="max-w-7xl mx-auto px-6 pt-12 pb-8">
+        <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+                <h1 class="text-4xl font-black text-slate-900 tracking-tight">Browse Recipes</h1>
+                <p class="text-slate-600 font-semibold mt-2 text-lg">Discover delicious recipes from our community.</p>
+            </div>
+
+            <form action="{{ route('recipes.browse') }}" method="GET" class="w-full lg:w-auto">
+                <div class="relative group">
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ $search ?? '' }}"
+                        placeholder="Search recipes..."
+                        class="w-full lg:w-80 px-4 py-3 pr-20 bg-white border-2 border-slate-200 rounded-xl focus:border-orange-500 focus:ring-0 transition-all duration-300 font-semibold text-sm"
+                    >
+                    <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-hover:text-orange-500 transition-colors" aria-label="Search recipes">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </button>
+                </div>
+
+                @if(!empty($search))
+                    <div class="mt-2 text-right">
+                        <a href="{{ route('recipes.browse') }}" class="text-xs font-bold text-orange-600 hover:text-orange-700">Clear search</a>
+                    </div>
+                @endif
+            </form>
+        </div>
+    </div>
 
     <!-- Category Sections -->
     <div class="max-w-7xl mx-auto px-6 pb-10 space-y-10">

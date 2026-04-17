@@ -86,9 +86,15 @@
                         </button>
                     </form>
                 @endcan
-                <a href="{{ route('recipes.create') }}" class="btn-primary px-5 py-2">
-                    Post Another Recipe
-                </a>
+
+                @auth
+                    <form method="POST" action="{{ route('recipes.save', $recipe->id) }}">
+                        @csrf
+                        <button type="submit" class="btn-primary px-5 py-2">
+                            Save Recipe
+                        </button>
+                    </form>
+                @endauth
             </div>
         </div>
     </div>

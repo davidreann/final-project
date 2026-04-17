@@ -13,7 +13,8 @@ class RecipeController extends Controller
 {
     public function index(Request $request)
     {
-        $search = $request->input('search');
+        $search = trim((string) $request->input('search', ''));
+        $search = $search !== '' ? $search : null;
 
         $topRecipes = Recipe::query()
             ->published()
@@ -176,6 +177,25 @@ class RecipeController extends Controller
         $this->authorize('view', $recipe);
 
         return view('recipes.show', compact('recipe'));
+    }
+
+    public function save(Request $request, Recipe $recipe)
+    {
+        $this->authorize('view', $recipe);
+
+        if ($recipe->is_draft) {
+            return back()->with('status', 'Only published recipes can be saved.');
+        }
+
+        $user = $request->user();
+
+        if (! $user) {
+            return redirect()->route('login');
+        }
+
+        $user->savedRecipes()->syncWithoutDetaching([$recipe->id]);
+
+        return back()->with('status', 'Recipe saved to your dashboard.');
     }
 
     public function destroy(Recipe $recipe)
