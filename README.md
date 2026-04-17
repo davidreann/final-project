@@ -2,7 +2,12 @@
 
 WhiskList is a Laravel-based recipe management web application that allows users to create, manage, and explore recipes. It includes user authentication, email verification, and a clean UI powered by Tailwind CSS.
 
-Please migtate and seed the database for better testing.
+Please migrate and seed the database for better testing.
+
+testing account:
+Email:whisker@gmail.com
+Password: Whisker1.
+
 
 ---
 
