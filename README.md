@@ -1,3 +1,8 @@
+Names:
+Abatteng, Rhona
+Davic, Rafaela
+Manalansan, Jynyl
+
 # WhiskList 🍳
 
 WhiskList is a Laravel-based recipe management web application that allows users to create, manage, and explore recipes. It includes user authentication, email verification, and a clean UI powered by Tailwind CSS.
@@ -8,6 +13,7 @@ testing account:
 Email:whisker@gmail.com
 Password: Whisker1.
 
+deployed site (no seed data): https://whisklist.onrender.com/
 
 ---
 
