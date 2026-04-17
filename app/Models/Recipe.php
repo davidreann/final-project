@@ -24,6 +24,12 @@ class Recipe extends Model
         'user_id',
     ];
 
+    // Added casts to ensure database values are strictly converted to boolean
+    // This prevents type mismatch errors on existing database entries
+    protected $casts = [
+        'is_draft' => 'boolean',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
